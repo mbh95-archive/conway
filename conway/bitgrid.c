@@ -11,7 +11,7 @@
 #include "bitgrid.h"
 #include "bitvec.h"
 
-BitGrid *bitgrid_new(int width, int height) {
+BitGrid *new_bitgrid(int width, int height) {
 	BitGrid *bitgrid = NULL;
 	if (width <= 0 || height <= 0) {
 		fprintf(stderr, "Error (bitgrid_new): Invalid grid size (%dx%d)\n", width, height);
@@ -24,7 +24,7 @@ BitGrid *bitgrid_new(int width, int height) {
 	}
 	bitgrid->width = width;
 	bitgrid->height = height;
-	bitgrid->bits = bitvec_new(width * height);
+	bitgrid->bits = new_bitvec(width * height);
 	if (bitgrid->bits == NULL) {
 		fprintf(stderr, "Error (bitgrid_new): Failed to allocate bit vector\n");
 		return NULL;
@@ -32,12 +32,12 @@ BitGrid *bitgrid_new(int width, int height) {
 	return bitgrid;
 }
 
-void bitgrid_free(BitGrid *freeme) {
+void free_bitgrid(BitGrid *freeme) {
 	if (freeme == NULL) {
 		return;
 	}
 	if (freeme->bits != NULL) {
-		bitvec_free(freeme->bits);
+		free_bitvec(freeme->bits);
 		freeme->bits = NULL;
 	}
 	free(freeme);

@@ -12,6 +12,7 @@
 #include "test.h"
 #include "bitvec.h"
 #include "bitgrid.h"
+#include "intqueue.h"
 
 void test_run_all() {
 	int bitvec_result = test_bitvec();
@@ -27,25 +28,31 @@ void test_run_all() {
 	} else {
 		printf("PASSED BitGrid (%d)\n", bitgrid_result);
 	}
+	
+	int intqueue_result = test_intqueue();
+	if (intqueue_result != 0) {
+		printf("FAILED IntQueue(%d)\n", intqueue_result);
+	} else {
+		printf("PASSED IntQueue (%d)\n", intqueue_result);
+	}
 }
 
 int test_bitvec() {
 	BitVec *bv = NULL;
 	int i;
-	bv = bitvec_new(-1);
+	bv = new_bitvec(-1);
 	if (bv != NULL) {
 		return -1;
 	}
-	bv = bitvec_new(0);
+	bv = new_bitvec(0);
 	if (bv != NULL) {
 		return -2;
 	}
 	
-	bv = bitvec_new(1);
+	bv = new_bitvec(1);
 	if (bv == NULL) {
 		return -3;
 	}
-	
 	for (i = 0; i < 1000; i++) {
 		if (bitvec_test_bit(bv, i) != 0) {
 			return -4;
@@ -60,10 +67,10 @@ int test_bitvec() {
 		}
 	}
 	
-	bitvec_free(bv);
+	free_bitvec(bv);
 	bv = NULL;
 	
-	bv = bitvec_new(32000);
+	bv = new_bitvec(32000);
 	if (bv == NULL) {
 		return -7;
 	}
@@ -80,26 +87,26 @@ int test_bitvec() {
 			return -10;
 		}
 	}
+	free_bitvec(bv);
 	return 0;
 }
 
 int test_bitgrid() {
 	BitGrid *bg = NULL;
 	int r, c;
-	bg = bitgrid_new(-1, -1);
+	bg = new_bitgrid(-1, -1);
 	if (bg != NULL) {
 		return -1;
 	}
-	bg = bitgrid_new(0, 0);
+	bg = new_bitgrid(0, 0);
 	if (bg != NULL) {
 		return -2;
 	}
 	
-	bg = bitgrid_new(1000, 1000);
+	bg = new_bitgrid(1000, 1000);
 	if (bg == NULL) {
 		return -3;
 	}
-	
 	for (r = 0; r < 1000; r++) {
 		for (c = 0; c < 1000; c++) {
 			if (bitgrid_test_bit(bg, r, c) != 0) {
@@ -116,14 +123,13 @@ int test_bitgrid() {
 		}
 	}
 	
-	bitgrid_free(bg);
+	free_bitgrid(bg);
 	bg = NULL;
 	
-	bg = bitgrid_new(1234, 17);
+	bg = new_bitgrid(1234, 17);
 	if (bg == NULL) {
 		return -7;
 	}
-	
 	for (r = 0; r < 17; r++) {
 		for (c = 0; c < 1234; c++) {
 			if (bitgrid_test_bit(bg, r, c) != 0) {
@@ -146,6 +152,58 @@ int test_bitgrid() {
 			}
 		}
 	}
+	free_bitgrid(bg);
+	return 0;
+}
 
+int test_intqueue() {
+	IntQueue *iq = NULL;
+	int i;
+	int *testvals;
+	
+	iq = new_intqueue(-1);
+	if (iq != NULL) {
+		return -1;
+	}
+	iq = new_intqueue(0);
+	if (iq != NULL) {
+		return -2;
+	}
+	
+	iq = new_intqueue(100);
+	if (iq == NULL || iq->curcap != 0 || iq->maxcap != 100) {
+		return -3;
+	}
+	
+	if (intqueue_peek(iq) != -1) {
+		return -4;
+	}
+	
+	if (intqueue_pop(iq) != -1) {
+		return -5;
+	}
+	
+	testvals = malloc(100 * sizeof(int));
+	for (i = 0; i < 50; i++) {
+		testvals[i] = rand();
+		intqueue_push(iq, testvals[i]);
+	}
+	for (i = 0; i < 25; i++) {
+		if (intqueue_pop(iq) != testvals[i]) {
+			return -6;
+		}
+	}
+	for (i = 50; i < 100; i++) {
+		testvals[i] = rand();
+		intqueue_push(iq, testvals[i]);
+	}
+	for (i = 25; i < 100; i++) {
+		if (intqueue_pop(iq) != testvals[i]) {
+			return -7;
+		}
+	}
+	
+	free(testvals);
+	free_intqueue(iq);
 	return 0;
 }

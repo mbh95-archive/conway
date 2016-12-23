@@ -11,7 +11,7 @@
 
 #include "bitvec.h"
 
-BitVec *bitvec_new(int size) {
+BitVec *new_bitvec(int size) {
 	BitVec *bitvec = NULL;
 	int i;
 	if (size <= 0) {
@@ -37,7 +37,7 @@ BitVec *bitvec_new(int size) {
 	return bitvec;
 }
 
-void bitvec_free(BitVec *freeme) {
+void free_bitvec(BitVec *freeme) {
 	if (freeme == NULL) {
 		return;
 	}

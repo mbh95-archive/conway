@@ -15,4 +15,6 @@ int test_bitvec();
 
 int test_bitgrid();
 
+int test_intqueue();
+
 #endif /* test_h */

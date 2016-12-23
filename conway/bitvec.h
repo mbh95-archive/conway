@@ -23,12 +23,12 @@ typedef struct {
  * Guarantees all bits are intially zero.
  * Return NULL on failure.
  */
-BitVec *bitvec_new(int size);
+BitVec *new_bitvec(int size);
 
 /*
  * Deallocate the given bit vector and all of its internal data structures.
  */
-void bitvec_free(BitVec *freeme);
+void free_bitvec(BitVec *freeme);
 
 /*
  * Ensures that the given bit vector can hold at least the specified number of bits.

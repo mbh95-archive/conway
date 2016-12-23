@@ -24,12 +24,12 @@ typedef struct {
  * Guarantees all bits are intially zero.
  * Return NULL on failure.
  */
-BitGrid *bitgrid_new(int width, int height);
+BitGrid *new_bitgrid(int width, int height);
 
 /*
  * Deallocate the given bit grid and all of its internal data structures.
  */
-void bitgrid_free(BitGrid *freeme);
+void free_bitgrid(BitGrid *freeme);
 
 /*
  * Set the specified bit in the given bit grid to the given value.
