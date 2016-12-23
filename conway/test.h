@@ -1,16 +1,16 @@
 //
-//  main.c
+//  test.h
 //  conway
 //
 //  Created by Matthew Hammond on 12/23/16.
 //  Copyright © 2016 Matthew Hammond. All rights reserved.
 //
 
-#include <stdio.h>
+#ifndef test_h
+#define test_h
 
-#include "test.h"
+void run_all_tests();
 
-int main(int argc, const char * argv[]) {
-	run_all_tests();
-    return 0;
-}
+int bitvec_test();
+
+#endif /* test_h */
