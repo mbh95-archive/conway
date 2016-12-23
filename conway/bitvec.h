@@ -23,38 +23,38 @@ typedef struct {
  * Guarantees all bits are intially zero.
  * Return NULL on failure.
  */
-BitVec *new_bitvec(int size);
+BitVec *bitvec_new(int size);
 
 /*
  * Deallocate the given bit vector and all of its internal data structures.
  */
-void free_bitvec(BitVec *freeme);
+void bitvec_free(BitVec *freeme);
 
 /*
  * Ensures that the given bit vector can hold at least the specified number of bits.
  * Guarantees that all newly allocated bits are initially zero.
  */
-void ensure_bitvec_size(BitVec *bitvec, int newsize);
+void bitvec_ensure_size(BitVec *bitvec, int newsize);
 
 /*
  * Set the specified bit in the given bit vector to 1.
  */
-void set_bit(BitVec *bitvec, int b);
+void bitvec_set_bit(BitVec *bitvec, int b);
 
 /*
  * Set the specifed bit in the given bit vector to 0.
  */
-void clear_bit(BitVec *bitvec, int b);
+void bitvec_clear_bit(BitVec *bitvec, int b);
 
 /*
  * Return the value of the specified bit in the given bit vector.
  * Returns -1 on failure.
  */
-int test_bit(BitVec *bitvec, int b);
+int bitvec_test_bit(BitVec *bitvec, int b);
 
 /*
  * Prints the given bit vector to stdout.
  */
-void print_bitvec(BitVec *bitvec);
+void bitvec_print(BitVec *bitvec);
 
 #endif /* bitvec_h */

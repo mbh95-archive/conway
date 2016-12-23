@@ -9,8 +9,10 @@
 #ifndef test_h
 #define test_h
 
-void run_all_tests();
+void test_run_all();
 
-int bitvec_test();
+int test_bitvec();
+
+int test_bitgrid();
 
 #endif /* test_h */

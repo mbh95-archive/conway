@@ -6,60 +6,144 @@
 //  Copyright © 2016 Matthew Hammond. All rights reserved.
 //
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "test.h"
 #include "bitvec.h"
+#include "bitgrid.h"
 
-void run_all_tests() {
-	int bitvec_result = bitvec_test();
+void test_run_all() {
+	int bitvec_result = test_bitvec();
 	if (bitvec_result != 0) {
 		printf("FAILED BitVec (%d)\n", bitvec_result);
 	} else {
 		printf("PASSED BitVec (%d)\n", bitvec_result);
 	}
+	
+	int bitgrid_result = test_bitgrid();
+	if (bitgrid_result != 0) {
+		printf("FAILED BitGrid (%d)\n", bitgrid_result);
+	} else {
+		printf("PASSED BitGrid (%d)\n", bitgrid_result);
+	}
 }
 
-int bitvec_test() {
+int test_bitvec() {
 	BitVec *bv = NULL;
 	int i;
-	bv = new_bitvec(-1);
+	bv = bitvec_new(-1);
 	if (bv != NULL) {
 		return -1;
 	}
-	bv = new_bitvec(0);
+	bv = bitvec_new(0);
 	if (bv != NULL) {
 		return -2;
 	}
 	
-	bv = new_bitvec(1);
+	bv = bitvec_new(1);
 	if (bv == NULL) {
 		return -3;
 	}
 	
 	for (i = 0; i < 1000; i++) {
-		if (test_bit(bv, i) != 0) {
+		if (bitvec_test_bit(bv, i) != 0) {
 			return -4;
 		}
-		set_bit(bv, i);
-		if (test_bit(bv, i) != 1) {
+		bitvec_set_bit(bv, i);
+		if (bitvec_test_bit(bv, i) != 1) {
 			return -5;
+		}
+		bitvec_clear_bit(bv, i);
+		if (bitvec_test_bit(bv, i) != 0) {
+			return -6;
 		}
 	}
 	
-	free_bitvec(bv);
+	bitvec_free(bv);
 	bv = NULL;
 	
-	bv = new_bitvec(32000);
-
+	bv = bitvec_new(32000);
+	if (bv == NULL) {
+		return -7;
+	}
 	for (i = 0; i < 32000; i+= 1) {
-		if (test_bit(bv, i) != 0) {
-			return -6;
+		if (bitvec_test_bit(bv, i) != 0) {
+			return -8;
 		}
-		set_bit(bv, i);
-		if (test_bit(bv, i) != 1) {
-			return -7;
+		bitvec_set_bit(bv, i);
+		if (bitvec_test_bit(bv, i) != 1) {
+			return -9;
+		}
+		bitvec_clear_bit(bv, i);
+		if (bitvec_test_bit(bv, i) != 0) {
+			return -10;
+		}
+	}
+	return 0;
+}
+
+int test_bitgrid() {
+	BitGrid *bg = NULL;
+	int r, c;
+	bg = bitgrid_new(-1, -1);
+	if (bg != NULL) {
+		return -1;
+	}
+	bg = bitgrid_new(0, 0);
+	if (bg != NULL) {
+		return -2;
+	}
+	
+	bg = bitgrid_new(1000, 1000);
+	if (bg == NULL) {
+		return -3;
+	}
+	
+	for (r = 0; r < 1000; r++) {
+		for (c = 0; c < 1000; c++) {
+			if (bitgrid_test_bit(bg, r, c) != 0) {
+				return -4;
+			}
+			bitgrid_set_bit(bg, r, c);
+			if (bitgrid_test_bit(bg, r, c) != 1) {
+				return -5;
+			}
+			bitgrid_clear_bit(bg, r, c);
+			if (bitgrid_test_bit(bg, r, c) != 0) {
+				return -6;
+			}
+		}
+	}
+	
+	bitgrid_free(bg);
+	bg = NULL;
+	
+	bg = bitgrid_new(1234, 17);
+	if (bg == NULL) {
+		return -7;
+	}
+	
+	for (r = 0; r < 17; r++) {
+		for (c = 0; c < 1234; c++) {
+			if (bitgrid_test_bit(bg, r, c) != 0) {
+				return -8;
+			}
+			bitgrid_set_bit(bg, r, c);
+			if (bitgrid_test_bit(bg, r, c) != 1) {
+				return -9;
+			}
+			bitgrid_clear_bit(bg, r, c);
+			if (bitgrid_test_bit(bg, r, c) != 0) {
+				return -10;
+			}
+		}
+	}
+	for (r = 17; r < 2000; r++) {
+		for (c = 1234; c < 2000; c++) {
+			if (bitgrid_test_bit(bg, r, c) != 0) {
+				return -11;
+			}
 		}
 	}
 
