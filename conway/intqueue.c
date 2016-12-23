@@ -45,6 +45,10 @@ void free_intqueue(IntQueue *freeme) {
 }
 
 int intqueue_is_empty(IntQueue *queue) {
+	if (queue == NULL) {
+		fprintf(stderr, "Error (intqueue_is_empty): Received NULL int queue\n");
+		return -1;
+	}
 	if (queue->curcap == 0) {
 		return 1;
 	} else {
@@ -53,7 +57,10 @@ int intqueue_is_empty(IntQueue *queue) {
 }
 
 void intqueue_push(IntQueue *queue, int pushme) {
-	if (queue->curcap >= queue->maxcap) {
+	if (queue == NULL) {
+		fprintf(stderr, "Error (intqueue_push): Received NULL int queue\n");
+		return;
+	} else if (queue->curcap >= queue->maxcap) {
 		fprintf(stderr, "Error: queue full (%d/%d)\n", queue->curcap, queue->maxcap);
 		return;
 	} else {
@@ -65,7 +72,10 @@ void intqueue_push(IntQueue *queue, int pushme) {
 
 int intqueue_pop(IntQueue *queue) {
 	int return_val;
-	if (intqueue_is_empty(queue)) {
+	if (queue == NULL) {
+		fprintf(stderr, "Error (intqueue_pop): Received NULL int queue\n");
+		return -1;
+	} else if (intqueue_is_empty(queue)) {
 		fprintf(stderr, "Error: Attempted pop from empty queue\n");
 		return -1;
 	} else {
@@ -77,7 +87,10 @@ int intqueue_pop(IntQueue *queue) {
 }
 
 int intqueue_peek(IntQueue *queue) {
-	if (intqueue_is_empty(queue)) {
+	if (queue == NULL) {
+		fprintf(stderr, "Error (intqueue_peek): Received NULL int queue\n");
+		return -1;
+	} else if (intqueue_is_empty(queue)) {
 		fprintf(stderr, "Error: Attempted peek from empty queue\n");
 		return -1;
 	} else {

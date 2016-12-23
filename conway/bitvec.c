@@ -54,6 +54,10 @@ void free_bitvec(BitVec *freeme) {
 void bitvec_ensure_size(BitVec *bitvec, int newsize) {
 	int increase = 0;
 	int i;
+	if (bitvec == NULL) {
+		fprintf(stderr, "Error (bitvec_ensure_size): Received NULL bit vector\n");
+		return;
+	}
 	if (newsize <= 0) {
 		fprintf(stderr, "Error (bitvec_ensure_size): Invalid size (%d)\n", newsize);
 		return;
@@ -72,6 +76,10 @@ void bitvec_ensure_size(BitVec *bitvec, int newsize) {
 }
 
 void bitvec_set_bit(BitVec *bitvec, int b) {
+	if (bitvec == NULL) {
+		fprintf(stderr, "Error (bitvec_set_bit): Received NULL bit vector\n");
+		return;
+	}
 	if (b < 0) {
 		fprintf(stderr, "Error (bitvec_set_bit): Invalid bit index (%d)\n", b);
 		return;
@@ -81,6 +89,10 @@ void bitvec_set_bit(BitVec *bitvec, int b) {
 }
 
 void bitvec_clear_bit(BitVec *bitvec, int b) {
+	if (bitvec == NULL) {
+		fprintf(stderr, "Error (bitvec_clear_bit): Received NULL bit vector\n");
+		return;
+	}
 	if (b < 0) {
 		fprintf(stderr, "Error (bitvec_clear_bit): Invalid bit index (%d)\n", b);
 		return;
@@ -90,6 +102,10 @@ void bitvec_clear_bit(BitVec *bitvec, int b) {
 }
 
 int bitvec_test_bit(BitVec *bitvec, int b) {
+	if (bitvec == NULL) {
+		fprintf(stderr, "Error (bitvec_test_bit): Received NULL bit vector\n");
+		return -1;
+	}
 	if (b < 0) {
 		fprintf(stderr, "Error (bitvec_test_bit): Invalid bit index (%d)\n", b);
 		return -1;

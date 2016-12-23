@@ -30,6 +30,7 @@ void free_intqueue(IntQueue *freeme);
 
 /*
  * Return 1 if the given int queue is empty and 0 otherwise.
+ * Return -1 on failure.
  */
 int intqueue_is_empty(IntQueue *queue);
 
@@ -41,13 +42,13 @@ void intqueue_push(IntQueue *queue, int pushme);
 
 /*
  * Remove and return the next int from the given queue.
- * Return -1 and print an error if the queue is empty.
+ * Return -1 and print an error if the queue is empty or NULL.
  */
 int intqueue_pop(IntQueue *queue);
 
 /*
  * Return the next int from the given queue.
- * Return -1 and print an error if the queue is empty.
+ * Return -1 and print an error if the queue is empty or NULL.
  */
 int intqueue_peek(IntQueue *queue);
 
