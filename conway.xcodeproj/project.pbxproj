@@ -12,6 +12,7 @@
 		6C37D9181E0D140100391F73 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C37D9161E0D140100391F73 /* test.c */; };
 		6C37D91B1E0D1BC500391F73 /* bitgrid.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C37D9191E0D1BC500391F73 /* bitgrid.c */; };
 		6C37D9211E0D273000391F73 /* intqueue.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C37D91F1E0D273000391F73 /* intqueue.c */; };
+		6C37D9241E0D318600391F73 /* conway.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C37D9221E0D318600391F73 /* conway.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,8 @@
 		6C37D91A1E0D1BC500391F73 /* bitgrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitgrid.h; sourceTree = "<group>"; };
 		6C37D91F1E0D273000391F73 /* intqueue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intqueue.c; sourceTree = "<group>"; };
 		6C37D9201E0D273000391F73 /* intqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intqueue.h; sourceTree = "<group>"; };
+		6C37D9221E0D318600391F73 /* conway.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = conway.c; sourceTree = "<group>"; };
+		6C37D9231E0D318600391F73 /* conway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = conway.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +81,8 @@
 				6C37D9201E0D273000391F73 /* intqueue.h */,
 				6C37D9161E0D140100391F73 /* test.c */,
 				6C37D9171E0D140100391F73 /* test.h */,
+				6C37D9221E0D318600391F73 /* conway.c */,
+				6C37D9231E0D318600391F73 /* conway.h */,
 			);
 			path = conway;
 			sourceTree = "<group>";
@@ -141,6 +146,7 @@
 			files = (
 				6C37D9181E0D140100391F73 /* test.c in Sources */,
 				6C37D9151E0D061100391F73 /* bitvec.c in Sources */,
+				6C37D9241E0D318600391F73 /* conway.c in Sources */,
 				6C37D90D1E0D052400391F73 /* main.c in Sources */,
 				6C37D91B1E0D1BC500391F73 /* bitgrid.c in Sources */,
 				6C37D9211E0D273000391F73 /* intqueue.c in Sources */,

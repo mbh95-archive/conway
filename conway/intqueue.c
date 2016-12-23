@@ -12,17 +12,17 @@
 
 IntQueue *new_intqueue(int size) {
 	if (size <= 0) {
-		fprintf(stderr, "Error: Invalid queue size: %d\n", size);
+		fprintf(stderr, "Error (new_intqueue): Invalid queue size: %d\n", size);
 		return NULL;
 	}
 	IntQueue *queue = malloc(sizeof(IntQueue));
 	if (queue == NULL) {
-		fprintf(stderr, "Error: Failed to allocate int queue struct\n");
+		fprintf(stderr, "Error (new_intqueue): Failed to allocate int queue struct\n");
 		return NULL;
 	}
 	queue->data = malloc(size * sizeof(int));
 	if (queue->data == NULL) {
-		fprintf(stderr, "Error: Failed to allocate int queue data\n");
+		fprintf(stderr, "Error (new_intqueue): Failed to allocate int queue data\n");
 		free(queue);
 		return NULL;
 	}

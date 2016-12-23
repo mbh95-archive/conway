@@ -12,6 +12,8 @@
 #include "bitvec.h"
 
 #define RC_TO_IDX(r, c, w) (((r) * (w)) + (c))
+#define IDX_TO_ROW(i, w) ((i) / (w))
+#define IDX_TO_COL(i, w) ((i) % (w))
 
 typedef struct {
 	int width;

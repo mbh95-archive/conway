@@ -14,19 +14,20 @@
 BitGrid *new_bitgrid(int width, int height) {
 	BitGrid *bitgrid = NULL;
 	if (width <= 0 || height <= 0) {
-		fprintf(stderr, "Error (bitgrid_new): Invalid grid size (%dx%d)\n", width, height);
+		fprintf(stderr, "Error (new_bitgrid): Invalid grid size (%dx%d)\n", width, height);
 		return NULL;
 	}
 	bitgrid = malloc(sizeof(BitGrid));
 	if (bitgrid == NULL) {
-		fprintf(stderr, "Error (bitgrid_new): Failed to allocate BitGrid struct\n");
+		fprintf(stderr, "Error (new_bitgrid): Failed to allocate BitGrid struct\n");
 		return NULL;
 	}
 	bitgrid->width = width;
 	bitgrid->height = height;
 	bitgrid->bits = new_bitvec(width * height);
 	if (bitgrid->bits == NULL) {
-		fprintf(stderr, "Error (bitgrid_new): Failed to allocate bit vector\n");
+		fprintf(stderr, "Error (new_bitgrid): Failed to allocate bit vector\n");
+		free(bitgrid);
 		return NULL;
 	}
 	return bitgrid;
