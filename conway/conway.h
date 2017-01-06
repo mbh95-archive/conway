@@ -28,6 +28,7 @@ GameOfLife *new_gameoflife(int width, int height);
 void free_gameoflife(GameOfLife *freeme);
 
 void gameoflife_put_at(GameOfLife *gol, int r, int c, int val);
+void gameoflife_put_at_next(GameOfLife *gol, int r, int c, int val);
 
 int gameoflife_get_at(GameOfLife *gol, int r, int c);
 

@@ -108,19 +108,47 @@ void gameoflife_put_at(GameOfLife *gol, int r, int c, int val) {
 	} else {
 		clamped_val = 0;
 	}
+	if (bitgrid_test_bit(gol->world, r, c) == clamped_val) {
+		return;
+	}
+	bitgrid_put_bit(gol->world, r, c, clamped_val);
+	
+	for (nr = r - 1; nr <= r + 1; nr++) {
+		for (nc = c - 1; nc <= c + 1; nc++) {
+			if (nr < 0 || nr >= gol->world->height || nc < 0 || nc >= gol->world->width) {
+				continue;
+			}
+			if (!bitgrid_test_bit(gol->queue_mask, nr, nc)) {
+				bitgrid_set_bit(gol->queue_mask, nr, nc);
+				intqueue_push(gol->active, RC_TO_IDX(nr, nc, gol->world->width));
+				
+			}
+		}
+	}
+}
+
+void gameoflife_put_at_next(GameOfLife *gol, int r, int c, int val) {
+	int nr, nc;
+	int clamped_val;
+	if (val) {
+		clamped_val = 1;
+	} else {
+		clamped_val = 0;
+	}
+	if (bitgrid_test_bit(gol->world_next, r, c) == clamped_val) {
+		return;
+	}
 	bitgrid_put_bit(gol->world_next, r, c, clamped_val);
 	
-	if (bitgrid_test_bit(gol->world, r, c) != clamped_val) {
-		for (nr = r - 1; nr <= r + 1; nr++) {
-			for (nc = c - 1; nc <= c + 1; nc++) {
-				if (nr < 0 || nr >= gol->world->height || nc < 0 || nc >= gol->world->width) {
-					continue;
-				}
-				if (!bitgrid_test_bit(gol->queue_mask_next, nr, nc)) {
-					bitgrid_set_bit(gol->queue_mask_next, nr, nc);
-					intqueue_push(gol->active_next, RC_TO_IDX(nr, nc, gol->world->width));
-					
-				}
+	for (nr = r - 1; nr <= r + 1; nr++) {
+		for (nc = c - 1; nc <= c + 1; nc++) {
+			if (nr < 0 || nr >= gol->world->height || nc < 0 || nc >= gol->world->width) {
+				continue;
+			}
+			if (!bitgrid_test_bit(gol->queue_mask_next, nr, nc)) {
+				bitgrid_set_bit(gol->queue_mask_next, nr, nc);
+				intqueue_push(gol->active_next, RC_TO_IDX(nr, nc, gol->world->width));
+				
 			}
 		}
 	}
@@ -135,12 +163,19 @@ void gameoflife_step(GameOfLife *gol) {
 	IntQueue *swap_queue = NULL;
 	int idx;
 	int r, c;
+	if (gol->active->curcap > 0) {
+		printf("UPDATING %d\n", gol->active->curcap);
+	}
+
+	//printf("FIRST: %d\n", bitgrid_test_bit(gol->world, 0, 0));
+
 	while (!intqueue_is_empty(gol->active)) {
 		idx = intqueue_pop(gol->active);
 		r = IDX_TO_ROW(idx, gol->world->width);
-		c = IDX_TO_COL(idx, gol->world->height);
+		c = IDX_TO_COL(idx, gol->world->width);
 		bitgrid_clear_bit(gol->queue_mask, r, c);
 		
+		printf("UPDATING %d, %d\n", r, c);
 		gameoflife_step_point(gol, r, c);
 	}
 	swap_grid = gol->world;
@@ -174,19 +209,22 @@ void gameoflife_step_point(GameOfLife *gol, int r, int c) {
 	}
 	
 	if (bitgrid_test_bit(gol->world, r, c)) { // LIVE
+		bitgrid_set_bit(gol->world_next, r, c);
 		if (neighbors < 2 || neighbors > 3) {
 			// DEATH
-			gameoflife_put_at(gol, r, c, 0);
+			gameoflife_put_at_next(gol, r, c, 0);
 		} else {
 			// LIFE
-			gameoflife_put_at(gol, r, c, 1);
+			gameoflife_put_at_next(gol, r, c, 1);
 
 		}
 	} else { // DEAD
+		bitgrid_clear_bit(gol->world_next, r, c);
 		if (neighbors == 3) {
 			// LIFE
-			gameoflife_put_at(gol, r, c, 1);
-
+			gameoflife_put_at_next(gol, r, c, 1);
+		} else {
+			gameoflife_put_at_next(gol, r, c, 0);
 		}
 	}
 	
