@@ -1,6 +1,6 @@
 //
 //  main.c
-//  sand
+//  conway
 //
 //  Created by Matthew Hammond on 12/21/16.
 //  Copyright © 2016 Matthew Hammond. All rights reserved.
@@ -27,9 +27,9 @@ SDL_Texture *renderTarget = NULL;
 SDL_Rect *gameRect = NULL;
 SDL_Rect *windowRect = NULL;
 
-int init_sdl();
+int init_sdl(void);
 
-void exit_sdl();
+void exit_sdl(void);
 
 void render(GameOfLife *gol, SDL_Renderer *renderer);
 

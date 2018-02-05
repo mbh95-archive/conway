@@ -163,11 +163,7 @@ void gameoflife_step(GameOfLife *gol) {
 	IntQueue *swap_queue = NULL;
 	int idx;
 	int r, c;
-	if (gol->active->curcap > 0) {
-		printf("UPDATING %d\n", gol->active->curcap);
-	}
-
-	//printf("FIRST: %d\n", bitgrid_test_bit(gol->world, 0, 0));
+//        printf("UPDATING %d COORDS\n", gol->active->curcap);
 
 	while (!intqueue_is_empty(gol->active)) {
 		idx = intqueue_pop(gol->active);
@@ -175,7 +171,7 @@ void gameoflife_step(GameOfLife *gol) {
 		c = IDX_TO_COL(idx, gol->world->width);
 		bitgrid_clear_bit(gol->queue_mask, r, c);
 		
-		printf("UPDATING %d, %d\n", r, c);
+//        printf("UPDATING COORD %d, %d\n", r, c);
 		gameoflife_step_point(gol, r, c);
 	}
 	swap_grid = gol->world;

@@ -9,12 +9,12 @@
 #ifndef test_h
 #define test_h
 
-void test_run_all();
+void test_run_all(void);
 
-int test_bitvec();
+int test_bitvec(void);
 
-int test_bitgrid();
+int test_bitgrid(void);
 
-int test_intqueue();
+int test_intqueue(void);
 
 #endif /* test_h */
